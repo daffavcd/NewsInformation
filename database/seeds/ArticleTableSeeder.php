@@ -12,7 +12,7 @@ class ArticleTableSeeder extends Seeder
     public function run()
     {
 
-        $count = 5;
+        $count = 12;
         factory(App\Article::class, $count)->create();
     }
 }

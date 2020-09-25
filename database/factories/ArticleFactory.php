@@ -7,8 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Article::class, function (Faker $faker) {
     return [
-        'title' => $faker->title,
+        'title' => $faker->catchPhrase,
         'content' => $faker->text,
-        'featured_image' => $faker->image('public/images',640,480),
+        'featured_image' => $faker->image('public/images',750,300, null, false),
+        
     ];
 });
