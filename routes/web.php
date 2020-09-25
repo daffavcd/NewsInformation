@@ -10,11 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Auth::routes();
+Route::get('article/{id}', function ($id) {
+    return 'Halaman Article dengan id ' . $id;
+});
+Route::get('about/', function () {
+    $nim = '1931710093';
+    $nama = 'Muhammad Daffa A.R';
+    return 'Nama    : ' . $nama . '<br> NIM     : '.$nim;
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
