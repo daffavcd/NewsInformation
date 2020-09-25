@@ -16,6 +16,6 @@ class ArticleController extends Controller
     {
         $id = $request->id;
 
-        return 'Selamat datang di article ' . $id;
+        return view('article',['id'=>$id]);
     }
 }

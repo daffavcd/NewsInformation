@@ -14,8 +14,12 @@ class AboutController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $nama = 'Muhammad Daffa A.R';
-        $nim    = '1931710093';
-        return 'Nama    : ' . $nama . '<br> NIM     : ' . $nim;
+
+        return view('about', 
+        ['nama' => 'Muhammad Daffa A.R'],
+        ['nim' => '1931710093'],
+    );
+
+
     }
 }

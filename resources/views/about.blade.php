@@ -12,10 +12,10 @@
 @extends('layouts.app')
 @section('title', 'Profil')
 @section('sidebar')
-<p>Sidebar halaman Home.</p>
+<p>Sidebar halaman About.</p>
 @endsection
 @section('header')
-<div class="card-header">Gome</div>
+<div class="card-header">About</div>
 @endsection
 @section('content')
 <div class="card-body">
@@ -25,11 +25,11 @@
     </div>
     @endif
 
-    You are logged in!
+    Nama : {{ $nama }} <br> NIM : {{ $nim}}
 </div>
 @endsection
 @section('footer')
 <div class="card-footer text-muted">
-    Ini Footer article
+    Ini Footer about
 </div>
 @endsection
