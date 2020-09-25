@@ -15,13 +15,7 @@ Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('article/{id}', function ($id) {
-    return 'Halaman Article dengan id ' . $id;
-});
-Route::get('about/', function () {
-    $nim = '1931710093';
-    $nama = 'Muhammad Daffa A.R';
-    return 'Nama    : ' . $nama . '<br> NIM     : '.$nim;
-});
+Route::get('article/{id}', 'PageController@index');
+Route::get('/about','PageController@about');
 
 Route::get('/home', 'HomeController@index')->name('home');
