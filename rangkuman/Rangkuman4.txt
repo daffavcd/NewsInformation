@@ -1,0 +1,17 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+
+1. Model dan Database
+   Model adalah bagian yang bertanggung jawab menangani query CRUD database.Di Laravel kita bisa dengan mudah
+   membuat model dengan "php artisan make:model". Nah jika kita ingin memnghubungkan database dengan laravel kita langkah pertama
+   yaitu kita harus melakukan konfigurasi  ke database di root dan cari file .env.
+2. Migration
+   Migration merupakan teknologi laravel yang digunakan untuk bisa membuat table melalui terminal, yang mana dapat membuat
+   pekerjaan team lebih mudah apabila berkali berganti-ganti schema database.
+3. Seeding
+   Sedding adalah semacam tools untuk mempermudah kita melakukan testing pengisian database.Nah disini biasanya di combine
+   kan dengan Factory agar bisa mencetak data banyak sekalipun, yang nantinya kita juga menggunakan faker untuk membuat data random nya.
+4. Cache
+   Cache merupakan penyimpanan local disetiap user agar setiap membuka halaman yang telah dibuka sebelumnya tidak load lagi ke database.
+   Di laravel caranya yaitu memanggil fungsi cache nya saat kita memanggil model di controller.   

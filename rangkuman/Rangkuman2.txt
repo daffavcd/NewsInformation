@@ -1,0 +1,12 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+
+1. Router Laravel
+   Jadi di file router/web.php inilah awal mula berjalannya sebuah framework dari laravel.Disini kita bisa melihat alamat defaultnya "/" 
+   menuju ke view welcome.php yang ada di resource.Disini juga kita bisa menambahkan router router baru jika kita ingin memanggil view ataupun
+   controller baru.Perintahnya seperti ini "Route::get(‘/nama_alamat’, ‘nama_controlroller ataupun fungsi yang ingin dijalankan’);".Bisa juga kita 
+   menambahkan parameter "{nama_parameter}" di setelah link nya.
+2. Controller Laravel
+   Disini kita bisa memasukkan logika kita agar lebih terstruktur.Cara membuatnya adalah dengan perintah "php artisan make:controller nama_controller"
+   di git bash/cmd.Disini kita bisa menambahkan fungsi-fungsi yang ingin kita gunakan.Bisa seperti mencetak tulisan, memanggil halaman dan lain-lain.

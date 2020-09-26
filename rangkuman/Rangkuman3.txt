@@ -1,0 +1,15 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+
+1. View Laravel
+   Disini pada laravel ada yang namanya blade yaitu semacam pengganti php untuk memanggil-manggil baik halaman atau variable
+   layaknya "php echo".Nah jika kita ingin memanggil file view kita tidak usah menyertakan .blade -nya.Pada blade ada beberapa istilah- istilah
+   Untuk memanggil layout.Pertama @yield(hanya untuk 1 baris kecil).Kedua @section(memanggil dalam beberapa baris biasanya untuk memanggil header,footer,dll jangan lupa diberi @endsection sebagai penutup).
+   Lalu ada yang namanya @extends(sama seperti extend di java konsepnya yaitu membuat sebuah halaman menjadi parrent yang nantinya dapat dipanggil variable2 nya).Nah ada juga dalam 
+   View laravel yang naamanya @Component .Fungsinya hampir sama cuma jika component lebih cenderung untuk penggunaan view yang ingin lebih sering dipanggil(pesan error)
+2. Bootstrap Laravel
+   Pada laravel kita tidak usah mendownload bootsrap dari halaman web lalu diextract disebuah folder.Akan tetapi kita bisa menginstall bootsrap dari console
+   .Kita harus menginstall nodejs dahulu.Setelah itu kita lakukan beberapa langkah pengikut berikutnya.Lalu jika sudah terinstall kita bisa menginstall bottsrap dengan perintah
+   php artisan ui bootsrap dengan diikuti php artisan ui bootsrap --auth.Sebelum mengcompile css kita harus install dependensi menggunakan NPM terlebih dahulu dengan perinth
+   "NPM install" dan anda bisa mengcompile aset dengan perintah "NPM run dev".

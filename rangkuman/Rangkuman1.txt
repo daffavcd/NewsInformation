@@ -1,0 +1,20 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+1. Framework 
+   Yaitu semacam kumpulan folder yang menyimpan kode program yang digunakan 
+   untuk memudahkan para developer untuk mengembangkan program dalam skala yang besar.
+   Biasanya digunakan untuk mempermudah pembagian pekerjaan sebuah team.
+2. Menginstal Laravel
+   Pertama harus memenuhi kriteria seperti yang ada di laravel.com/documentation 
+   seperti versi php harus >=7.2 dan memiliki composer.Lalu kita menginstalnya melalui command 
+   prompt dengan perintah yang seperti di joobsheet.Nah dengan laravel ini kita tidak harus
+   menggunakan web server karena sudah disediakan oleh laravel sendiri secara internal.Yaitu menggunakan port 8000
+3. Menggunakan Git
+   Di git itu seperti kita akan membuat versi - versi baru dari sebuah program tanpa harus menghapus file sebelumnya.
+   Nah disini pertama kita harus masuk ke direktori yang ingin kita Git-kan.Lalu kita menggunakan perintah
+   "git init" untuk membuat git-nya.Lalu kita lakukan "git add <namafile>" agar supaya si file-nya siap untuk di commit.
+   Setelah itu kita lakukan "git commit" untuk menyimpan file tersebut.Nah untuk menyimpannya di GitHub kita harus melakukan push dari local dan diarahkan ke alamat web
+   repo kita yang di Github dengan perintah "git remote add origin 'nama_url'". Lalu kita memberikan perintah push dengan "git push -u origin master".
+   Nah nanti kita akan disuruh memasukkan username dan password jika nanti di git bash nya tulisannya sudah "Done" ,maka anda 
+   sukses telah mengirim file anda ke Github.
