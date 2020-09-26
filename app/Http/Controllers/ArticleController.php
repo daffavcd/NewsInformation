@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Article;
 class ArticleController extends Controller
 {
     /**
@@ -14,8 +14,7 @@ class ArticleController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $id = $request->id;
-
-        return view('article',['id'=>$id]);
+        $temp = Article::find($request->id);
+        return view('article', ['article' => $temp]);
     }
 }

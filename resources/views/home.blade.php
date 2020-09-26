@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <h2 class="card-title">{{$item->title}}</h2>
                     <p class="card-text">{{$item->content}}</p>
-                    <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    <a href="article/{{ $item->id }}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Posted on {{$item->created_at}} by
