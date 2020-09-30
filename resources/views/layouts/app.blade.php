@@ -34,12 +34,12 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                        <a class="nav-link" href="/">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Services</a>
@@ -54,9 +54,59 @@
 
     <!-- Page Content -->
     @yield('content')
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
 
+        <!-- Search Widget -->
+        <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+                <form action="/find" method="GET">
+                    <div class="input-group">
+                        <input type="text" name="cari" class="form-control" placeholder="Search article...">
+                        <span class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">Go!</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+            <h5 class="card-header">Categories</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                            @foreach ($kategori as $item)
+                            <li>
+                                <a href="/category/{{$item->category}}">{{$item->category}}</a>
+                            </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+            <h5 class="card-header">Side Widget</h5>
+            <div class="card-body">
+                You can put anything you want inside of these side widgets. They are easy to use, and feature the
+                new Bootstrap 4 card containers!
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    <!-- /.row -->
+    </div>
     <!-- /.container -->
-    
+
     <!-- Footer -->
     <footer class="py-5 bg-dark">
         <div class="container">

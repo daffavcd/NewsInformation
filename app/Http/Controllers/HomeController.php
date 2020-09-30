@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,9 @@ class HomeController extends Controller
         $value = Cache::rememberForever('users', function () {
             return Article::all();
         });
-        return view('home', ['article' => $value]);
+        $kategori = DB::table('articles')
+            ->groupBy('category')
+            ->get();
+        return view('home', ['article' => $value],['kategori' => $kategori]);
     }
 }

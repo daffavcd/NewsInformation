@@ -12,11 +12,9 @@
 */
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('article/{id}', 'ArticleController');
 
 Route::get('/about','AboutController');
-
-Route::get('/home', 'HomeController');
+Route::get('category/{category}','CategoryController');
+Route::get('/', 'HomeController');
+Route::get('/find','FindController');
