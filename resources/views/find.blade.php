@@ -6,8 +6,8 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Based on Category 
-                <small>{{ $cari->cari}}</small>
+            <h1 class="my-4">Based on Search of : 
+                <small>{{ $cari}}</small>
             </h1>
 
             @foreach ($data as $item)

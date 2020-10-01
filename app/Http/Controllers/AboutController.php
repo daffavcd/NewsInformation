@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AboutController extends Controller
 {
@@ -14,12 +15,14 @@ class AboutController extends Controller
      */
     public function __invoke(Request $request)
     {
-
-        return view('about', 
-        ['nama' => 'Muhammad Daffa A.R'],
-        ['nim' => '1931710093'],
-    );
-
-
+        $kategori = DB::table('articles')
+            ->groupBy('category')
+            ->get();
+            $data = array(
+                'nama' => 'Muhammad Daffa A.R',
+                'nim' => '1931710093',
+                'kategori' => $kategori
+            );
+        return view('about',$data);
     }
 }

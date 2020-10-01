@@ -61,7 +61,7 @@
         <div class="card my-4">
             <h5 class="card-header">Search</h5>
             <div class="card-body">
-                <form action="/find" method="GET">
+                <form action="/find" method="GET" autocomplete="off">
                     <div class="input-group">
                         <input type="text" name="cari" class="form-control" placeholder="Search article...">
                         <span class="input-group-append">

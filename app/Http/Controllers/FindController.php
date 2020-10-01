@@ -21,7 +21,11 @@ class FindController extends Controller
         $kategori = DB::table('articles')
             ->groupBy('category')
             ->get();
-        $cari = $request->cari;
-        return view('category', ['data' => $temp], ['kategori' => $kategori], ['cari' => $cari]);
+        $data = array(
+            'data' => $temp,
+            'kategori' => $kategori,
+            'cari' => $request->get('cari')
+        );
+        return view('find', $data);
     }
 }
