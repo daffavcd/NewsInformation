@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     Posted on {{$item->created_at}} |
-                    <a href="#">{{$item->category}}</a>
+                    <a href="/category/{{$item->category}}">{{$item->category}}</a>
                 </div>
             </div>
             @endforeach
