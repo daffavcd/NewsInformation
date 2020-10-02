@@ -17,4 +17,4 @@ Route::get('article/{id}', 'ArticleController');
 Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');
 Route::get('/', 'HomeController');
-Route::get('/find','FindController');
+Route::get('/find','FindController'); 

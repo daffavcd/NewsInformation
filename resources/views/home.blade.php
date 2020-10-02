@@ -19,7 +19,7 @@
                     <a href="article/{{ $item->id }}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
-                    Posted on {{$item->created_at}} |   
+                    Posted on {{$item->created_at}} |
                     <a href="#">{{$item->category}}</a>
                 </div>
             </div>
@@ -28,14 +28,16 @@
 
             <!-- Pagination -->
             <ul class="pagination justify-content-center mb-4">
+                @if($article->onFirstPage()!=1)
                 <li class="page-item">
-                    <a class="page-link" href="#">&larr; Older</a>
+                    <a class="page-link" href="{{$article->previousPageUrl()}}">&larr; Previous</a>
                 </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Newer &rarr;</a>
+                @endif
+                @if($article->hasMorePages()==1)
+                <li class="page-item">
+                    <a class="page-link" href="{{$article->nextPageUrl()}}">Next &rarr;</a>
                 </li>
+                @endif
             </ul>
 
         </div>
-
-    

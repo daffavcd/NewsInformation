@@ -12,12 +12,12 @@ class HomeController extends Controller
 
     public function __invoke(Request $request)
     {
-        $value = Cache::rememberForever('users', function () {
-            return Article::all();
-        });
+        // $value = Cache::rememberForever('users', function () {
+        // });
+        $value = DB::table('articles')->paginate(5);
         $kategori = DB::table('articles')
             ->groupBy('category')
             ->get();
-        return view('home', ['article' => $value],['kategori' => $kategori]);
+        return view('home', ['article' => $value], ['kategori' => $kategori]);
     }
 }
