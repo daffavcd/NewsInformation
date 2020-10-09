@@ -55,7 +55,7 @@
                     @if(auth()->check())
                     <div class="log">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{{$name[1]}}</a>
+                            <a class="nav-link" href="/profile">{{$name[1]}}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>
