@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class FindController extends Controller
 {
     /**
@@ -21,10 +21,13 @@ class FindController extends Controller
         $kategori = DB::table('articles')
             ->groupBy('category')
             ->get();
+
+        $user = Auth::user();
         $data = array(
             'data' => $temp,
+            'cari' => $request->get('cari'),
             'kategori' => $kategori,
-            'cari' => $request->get('cari')
+            'user' => $user
         );
         return view('find', $data);
     }

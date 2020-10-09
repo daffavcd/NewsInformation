@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -20,9 +22,11 @@ class ArticleController extends Controller
             ->groupBy('category')
             ->get();
 
+        $user = Auth::user();
         $data = array(
             'article' => $temp,
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'user' => $user
         );
         return view('article', $data);
     }

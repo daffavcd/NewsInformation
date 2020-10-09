@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -21,6 +22,12 @@ class CategoryController extends Controller
         $kategori = DB::table('articles')
             ->groupBy('category')
             ->get();
-        return view('category', ['data' => $temp],['kategori'=> $kategori]);
+        $user = Auth::user();
+        $data = array(
+            'data' => $temp,
+            'kategori' => $kategori,
+            'user' => $user
+        );
+        return view('category', $data);
     }
 }

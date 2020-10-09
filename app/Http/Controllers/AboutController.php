@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class AboutController extends Controller
 {
     /**
@@ -18,11 +18,13 @@ class AboutController extends Controller
         $kategori = DB::table('articles')
             ->groupBy('category')
             ->get();
-            $data = array(
-                'nama' => 'Muhammad Daffa A.R',
-                'nim' => '1931710093',
-                'kategori' => $kategori
-            );
-        return view('about',$data);
+        $user = Auth::user();
+        $data = array(
+            'nama' => 'Muhammad Daffa A.R',
+            'nim' => '1931710093',
+            'kategori' => $kategori,
+            'user' => $user
+        );
+        return view('about', $data);
     }
 }

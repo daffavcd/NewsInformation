@@ -22,7 +22,9 @@
 </head>
 
 <body>
-
+    @php
+    $name =explode(' ',$user->name);
+    @endphp
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -41,9 +43,14 @@
                     <li class="nav-item @if(Request::segment(1)=='about') active @endif">
                         <a class="nav-link" href="/about">About</a>
                     </li>
-                    <li class="nav-item @if(Request::segment(1)=='about') active @endif">
-                    <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+                    <div style="display: inherit;background-color: #6c757d;border-radius: 3px;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{$name[1]}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>

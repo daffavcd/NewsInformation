@@ -6,7 +6,8 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Home{{$user->name}}
+            <h1 class="my-4">Home
+
             </h1>
 
             @foreach ($article as $item)
