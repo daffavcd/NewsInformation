@@ -20,10 +20,19 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<style>
+    .log {
+        display: inherit;
+        background-color: #6c757d;
+        border-radius: 3px;
+    }
+</style>
 
 <body>
     @php
+    if (auth()->check()) {
     $name =explode(' ',$user->name);
+    }
     @endphp
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -43,7 +52,8 @@
                     <li class="nav-item @if(Request::segment(1)=='about') active @endif">
                         <a class="nav-link" href="/about">About</a>
                     </li>
-                    <div style="display: inherit;background-color: #6c757d;border-radius: 3px;">
+                    @if(auth()->check())
+                    <div class="log">
                         <li class="nav-item">
                             <a class="nav-link" href="#">{{$name[1]}}</a>
                         </li>
@@ -51,6 +61,16 @@
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     </div>
+                    @else
+                    <div class="log">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        </li>
+                    </div>
+                    @endif
                 </ul>
             </div>
         </div>
