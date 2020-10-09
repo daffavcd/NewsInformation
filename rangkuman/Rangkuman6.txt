@@ -1,0 +1,15 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+
+1. Authentication
+   Authentication di laravel konsepnya sama seperti authentication di php.Nah pada tahap authentication ini
+   saat kita melakukan Register data tentunya akan disimpan sesuai yang ada di controller fungsi create.Jika kita sudah melakukan Register
+   kita akan langsung diarahkan sesuai "protected $redirectTo = RouteServiceProvider::HOME;" -nya. Tentunya kita bisa mengganti alamat redirect nya
+   di "Provider Route service provider" nah nanti kita cari "public const HOME = '/';" setelah itu kita bisa ganti "/" nya sesuai 
+   dengan alamat router yang ingin dituju.Lalu juga ada Login dan konsepnya jika berhasil maka akan sama seperti Register.
+   Jika kita sudah melakukan authentication kita bisa memanggil Session kita dengan perintah "Auth::user()" di controller dan kita bawa menggunakan variable
+   ke view. Di view misal kita ingin menampilkan nama cukup memanggilnya dengan cara "$nama_variable->nama".Dan terakhir ada Logout
+   .Untuk logout kita cukup mengarahkannya ke sebuah fungsi dicontroller yang berisi "Auth::logout();". Oiya jika kita ingin
+   application kita harus login terlebih dahulu sebelum dapat mengakses maka kita cukup menggunakan param construct yang berisi "$this->middleware('auth');".
+ 
