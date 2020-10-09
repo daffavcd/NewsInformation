@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.parent')
 <div class="container mt-5">
 
     <div class="row mt-md-3">
@@ -6,7 +6,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Home
+            <h1 class="my-4">Home{{$user->name}}
             </h1>
 
             @foreach ($article as $item)

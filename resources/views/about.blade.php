@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.parent')
 <div class="container mt-5">
 
     <div class="row mt-md-3">

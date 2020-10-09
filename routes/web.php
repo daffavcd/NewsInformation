@@ -18,3 +18,7 @@ Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');
 Route::get('/', 'HomeController');
 Route::get('/find','FindController'); 
+
+// LOGOUT ROUTE
+Route::get('/logout','Auth\LoginController@logout'); 
+// ------------------------
