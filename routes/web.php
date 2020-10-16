@@ -12,7 +12,8 @@
 */
 Auth::routes();
 
-Route::get('article/{id}', 'ArticleController');
+Route::get('article/{id}', 'ArticleController@index');
+Route::post('insertComment', 'ArticleController@insertComment');
 
 Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');
