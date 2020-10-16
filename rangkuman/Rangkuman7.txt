@@ -1,0 +1,11 @@
+Nama   : Muhammad Daffa A.R/19
+Kelas  : MI-2B
+NIM    : 1931710093
+
+1. Insert
+  Pada laravel jika kita ingin melakukan insert itu cukup mudah hanya dengan menngunakan form bermethod post dan sesuaikan nama setiap
+  form sesuai dengan nama yang didatabase,lalu kita arahkan ke router dengan metod post juga,setelah itu baru kita kirim ke controller dan kita lakukan
+  pendefinisian. Di controller kita harus mendefinisikan model mana yang ingin kita pakai lalu kita sesuaikan dengan memanggil $request untuk mengambil value setiap
+  form yang telah kita isikan sebelumnya. Nah nanti kita tinggal melakukan perintah save() dilanjutkan dengan redirect ke halaman yang ingin dituju berikutnya.
+  Pada kasus comment ini data yang dibutuhkan adalah comment,id_user,dan id post.
+ 
