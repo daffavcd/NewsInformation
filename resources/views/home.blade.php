@@ -1,4 +1,5 @@
 @extends('layouts.parent')
+@section('content')
 <div class="container mt-5">
 
     <div class="row mt-md-3">
@@ -42,3 +43,4 @@
             </ul>
 
         </div>
+        @endsection
