@@ -46,6 +46,6 @@ class ArticleController extends Controller
         $bawa->comment = $request->comment;
 
         $bawa->save();
-        return back();
+        return back()->with(['success' => 'Comment insert Success !']);
     }
 }
