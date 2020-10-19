@@ -11,16 +11,16 @@
     <title> Halaman @yield('title')</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap-theme.min.css')}}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ url('/node_modules/jquery/dist/jquery.min.js') }}"></script>
+
 </head>
 <style>
     .log {
@@ -77,59 +77,62 @@
             </div>
         </div>
     </nav>
-
     <!-- Page Content -->
-    @yield('content')
-    <!-- Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <div class="container mt-5">
 
-        <!-- Search Widget -->
-        <div class="card my-4">
-            <h5 class="card-header">Search</h5>
-            <div class="card-body">
-                <form action="/find" method="GET" autocomplete="off">
-                    <div class="input-group">
-                        <input type="text" name="cari" class="form-control" placeholder="Search article...">
-                        <span class="input-group-append">
-                            <button class="btn btn-secondary" type="submit">Go!</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <div class="row">
+            @yield('content')
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
 
-        <!-- Categories Widget -->
-        <div class="card my-4">
-            <h5 class="card-header">Categories</h5>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled mb-0">
-                            @foreach ($kategori as $item)
-                            <li>
-                                <a href="/category/{{$item->category}}">{{$item->category}}</a>
-                            </li>
-                            @endforeach
-
-                        </ul>
+                <!-- Search Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Search</h5>
+                    <div class="card-body">
+                        <form action="/find" method="GET" autocomplete="off">
+                            <div class="input-group">
+                                <input type="text" name="cari" class="form-control" placeholder="Search article...">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit">Go!</button>
+                                </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
+
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    @foreach ($kategori as $item)
+                                    <li>
+                                        <a href="/category/{{$item->category}}">{{$item->category}}</a>
+                                    </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Side Widget</h5>
+                    <div class="card-body">
+                        You can put anything you want inside of these side widgets. They are easy to use, and feature
+                        the
+                        new Bootstrap 4 card containers!
+                    </div>
+                </div>
+
             </div>
+
         </div>
-
-        <!-- Side Widget -->
-        <div class="card my-4">
-            <h5 class="card-header">Side Widget</h5>
-            <div class="card-body">
-                You can put anything you want inside of these side widgets. They are easy to use, and feature the
-                new Bootstrap 4 card containers!
-            </div>
-        </div>
-
-    </div>
-
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
     </div>
     <!-- /.container -->
 
@@ -146,5 +149,6 @@
 
 
 </body>
+@yield('script')
 
 </html>

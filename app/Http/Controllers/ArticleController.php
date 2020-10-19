@@ -25,6 +25,7 @@ class ArticleController extends Controller
 
         $comment = DB::table('comments')
             ->leftJoin('users', 'users.id', '=', 'comments.id_user')
+            ->select('*','comments.id AS id_comment','users.id AS id_user')
             ->where('id_article', $request->id)
             ->orderBy('comments.id', 'desc')
             ->get();
@@ -47,5 +48,14 @@ class ArticleController extends Controller
 
         $bawa->save();
         return back()->with(['success' => 'Comment insert Success !']);
+    }
+    public function updateComment(Request $request)
+    {
+        $bawa = new Comment;
+        $bawa->id = $request->id;
+        $bawa->comment = $request->comment;
+
+        $bawa->save();
+        return back()->with(['success' => 'Comment Update Success !']);
     }
 }
