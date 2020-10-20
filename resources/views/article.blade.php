@@ -75,9 +75,14 @@
             if($user->id==$item->id_user){
             ?>
         <div class="btn-group" style="float:right;">
-          <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+          <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Action
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
+              </path>
+            </svg>
           </button>
           <div class="dropdown-menu">
             <a class="dropdown-item edit_{{$total}}" href="#">Edit</a>
@@ -100,12 +105,12 @@
         <form method="POST" action="/updateComment">
           @csrf
           <input type="hidden" name="id" value="{{$item->id_comment}}">
-          <input class="form-control edit_komen_{{$total}}" style="width: 79%;;display:none;float:left" type="text" name="comment"
-            value="{{$item->comment}}">
+          <input class="form-control form-control-sm edit_komen_{{$total}}" style="width: 82%;display:none;float:left"
+            type="text" name="comment" value="{{$item->comment}}">
           <button type="submit" style="margin-left: 6px;display:none"
-            class="btn btn-warning edit_komen_{{$total}}">Save</button>
-            <button type="button" style="margin-left: 6px;display:none"
-            class="btn btn-secondary cancel_komen_{{$total}}">Close</button>
+            class="btn btn-sm btn-primary edit_komen_{{$total}}">Save</button>
+          <button type="button" style="margin-left: 6px;display:none"
+            class="btn btn-sm btn-light cancel_komen_{{$total}}">Cancel</button>
         </form>
       </div>
       <?php
@@ -166,7 +171,8 @@
   evt.preventDefault();
   });
   <?php } ?>
-  function delet(key,evt){
+  function
+  delet(key,evt){
   $('#deletemodal').modal('show');
   $('#idcomment').val(key);
   evt.preventDefault();
