@@ -37,6 +37,8 @@
   </div>
   @endif
   <!-- Comments Form -->
+
+  @if(auth()->check())
   <div class="card my-4">
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
@@ -46,11 +48,18 @@
           <input type="hidden" name="id_article" value="{{$article->id}}">
           <textarea class="form-control" name="comment" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submi</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
-
+  @else
+  <div class="card my-4">
+    <h5 class="card-header">Leave a Comment:</h5>
+    <div class="card-body">
+      <h5>You need to login first to leave a comment.</h5>
+    </div>
+  </div>
+  @endif
   @php
   $total=1;
   @endphp
@@ -62,6 +71,7 @@
       <div style="display:block">
         <h5 class="mt-0" style="float: left">{{$item->name}}</h5>
         <?php
+          if(auth()->check()){
             if($user->id==$item->id_user){
             ?>
         <div class="btn-group" style="float:right;">
@@ -71,10 +81,11 @@
           </button>
           <div class="dropdown-menu">
             <a class="dropdown-item edit_{{$total}}" href="#">Edit</a>
-            <a class="dropdown-item delet" href="#">Delete</a>
+            <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
           </div>
         </div>
         <?php
+            }
             }
             ?>
       </div>
@@ -82,16 +93,24 @@
         {{$item->comment}}
       </div>
       <?php
+        if(auth()->check()){
           if($user->id==$item->id_user){
           ?>
-      <div style="display: inline-flex;margin-top: 10px;">
-        <input class="form-control edit_komen_{{$total}}" style="width: 590px;display:none" type="text"
-          name="edit_{{$item->id_comment}}" value="{{$item->comment}}">
-        <button type="submit" style="margin-left: 6px;display:none"
-          class="btn btn-warning edit_komen_{{$total}}">Save</button>
+      <div style="display: block;margin-top: 10px;">
+        <form method="POST" action="/updateComment">
+          @csrf
+          <input type="hidden" name="id" value="{{$item->id_comment}}">
+          <input class="form-control edit_komen_{{$total}}" style="width: 79%;;display:none;float:left" type="text" name="comment"
+            value="{{$item->comment}}">
+          <button type="submit" style="margin-left: 6px;display:none"
+            class="btn btn-warning edit_komen_{{$total}}">Save</button>
+            <button type="button" style="margin-left: 6px;display:none"
+            class="btn btn-secondary cancel_komen_{{$total}}">Close</button>
+        </form>
       </div>
       <?php
-            }
+          } 
+          }
             ?>
     </div>
   </div>
@@ -118,8 +137,12 @@
         <p> Are you sure you want to delete this comment ? </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger">Yes</button>
+        <form method="POST" action="/deleteComment">
+          @csrf
+          <input type="hidden" id="idcomment" name="id" value="">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-danger">Yes</button>
+        </form>
       </div>
     </div>
   </div>
@@ -131,13 +154,22 @@
   $(".edit_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").show("slow");
+  $(".cancel_komen_<?php echo $i ?>").show("slow");
   $("#komen_<?php echo $i ?>").hide();
   evt.preventDefault();
   });
-  <?php } ?>
-  $(".delet").click(function(evt){
-  $('#deletemodal').modal('show');
+  $(".cancel_komen_<?php echo $i ?>").click(function(evt)
+  {
+  $(".edit_komen_<?php echo $i ?>").hide();
+  $(".cancel_komen_<?php echo $i ?>").hide();
+  $("#komen_<?php echo $i ?>").show();
   evt.preventDefault();
   });
+  <?php } ?>
+  function delet(key,evt){
+  $('#deletemodal').modal('show');
+  $('#idcomment').val(key);
+  evt.preventDefault();
+  };
 </script>
 @endsection
