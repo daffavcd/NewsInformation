@@ -27,12 +27,32 @@ class ArticleController extends Controller
             ->leftJoin('users', 'users.id', '=', 'comments.id_user')
             ->select('*', 'comments.id AS id_comment', 'users.id AS id_user')
             ->where('id_article', $request->id)
+            ->where('id_comment_parent', 0)
             ->orderBy('comments.id', 'desc')
             ->get();
+        $total = 1;
+
+        //cari setiap anak di var + temp
+        foreach ($comment as $value) {
+            ${"comment_child_" . $total} = DB::table('comments')
+                ->leftJoin('users', 'users.id', '=', 'comments.id_user')
+                ->select('*', 'comments.id AS id_comment', 'users.id AS id_user')
+                ->where('id_comment_parent', $value->id_comment)
+                ->orderBy('comments.id', 'asc')
+                ->get();
+            $total++;
+        }
+        //masukkan var tdi ke dalam 1 buah array
+        $anak_comment = array();
+        for ($i = 0; $i < $total - 1; $i++) {
+            $anak_comment[$i] = ${"comment_child_" . ($i + 1)};
+        }
+
         $user = Auth::user();
         $data = array(
             'article' => $temp,
             'comment' => $comment,
+            'anak_comment' => $anak_comment,
             'kategori' => $kategori,
             'user' => $user
         );

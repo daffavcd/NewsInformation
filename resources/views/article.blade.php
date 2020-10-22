@@ -38,6 +38,7 @@
   @endif
   <!-- Comments Form -->
 
+  {{-- FORM INPUT KOMEN --}}
   @if(auth()->check())
   <div class="card my-4">
     <h5 class="card-header">Leave a Comment:</h5>
@@ -62,8 +63,10 @@
   @endif
   @php
   $total=1;
+  $index=0;
   @endphp
-  <!-- Single Comment -->
+  <!-- TAMPIL KOMEN -->
+  {{-- KOMEN PARENT --}}
   @foreach ($comment as $item)
   <div class="media mb-4">
     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
@@ -104,6 +107,7 @@
         if(auth()->check()){
           if($user->id==$item->id_user){
           ?>
+          {{-- UPDATE FORM KOMEN PARENT --}}
       <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/updateComment">
           @csrf
@@ -116,6 +120,11 @@
             class="btn btn-sm btn-light cancel_komen_{{$total}}">Cancel</button>
         </form>
       </div>
+      <?php
+    } 
+    }
+      ?>
+      {{-- FORM REPLY KOMEN --}}
       <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/replyComment">
           @csrf
@@ -129,37 +138,25 @@
             class="btn btn-sm btn-light cancel_reply_komen_{{$total}}">Cancel</button>
         </form>
       </div>
-      <?php
-          } 
-          }
-            ?>
-      <div class="media mt-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-          <h5 class="mt-0">Commenter Name</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
-          vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-          lacinia congue felis in faucibus.
-        </div>
-      </div>
+      {{-- TAMPIL CHILD KOMEN --}}
+      @foreach ($anak_comment[$index] as $item)
 
       <div class="media mt-4">
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
-          <h5 class="mt-0">Commenter Name</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
-          vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-          lacinia congue felis in faucibus.
+          <h5 class="mt-0">{{$item->name}}</h5>
+          {{$item->comment}}
         </div>
       </div>
+      @endforeach
+
     </div>
   </div>
   <?php
   $total+=1;
+  $index+=1;
   ?>
   @endforeach
-
-  <!-- Comment with nested comments -->
 </div>
 @endsection
 @section('script')
@@ -191,6 +188,7 @@
   <?php
       for ($i=1; $i < $total; $i++) { 
         ?>
+        // EDIT SHOW KOMEN JQUERY
   $(".edit_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").show("slow");
@@ -198,7 +196,7 @@
   $("#komen_<?php echo $i ?>").hide();
   evt.preventDefault();
   });
-
+        // CANCEL EDIT KOMEN JQUERY
   $(".cancel_komen_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").hide();
@@ -206,6 +204,7 @@
   $("#komen_<?php echo $i ?>").show();
   evt.preventDefault();
   });
+        // REPLY SHOW KOMEN JQUERY
 
   $(".reply_<?php echo $i ?>").click(function(evt)
   {
@@ -213,14 +212,13 @@
   $(".cancel_reply_komen_<?php echo $i ?>").show("slow");
   evt.preventDefault();
   });
-
+        // CANCEL REPLY JQUERY
   $(".cancel_reply_komen_<?php echo $i ?>").click(function(evt)
   {
   $(".reply_komen_<?php echo $i ?>").hide();
   $(".cancel_reply_komen_<?php echo $i ?>").hide();
   evt.preventDefault();
   });
-
   <?php } ?>
   function
   delet(key,evt){
