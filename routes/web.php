@@ -16,6 +16,7 @@ Route::get('article/{id}', 'ArticleController@index');
 Route::post('insertComment', 'ArticleController@insertComment');
 Route::post('updateComment', 'ArticleController@updateComment');
 Route::post('deleteComment', 'ArticleController@deleteComment');
+Route::post('replyComment', 'ArticleController@replyComment');
 
 Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');

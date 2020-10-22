@@ -64,4 +64,16 @@ class ArticleController extends Controller
         $flight->delete();
         return back()->with(['success' => 'Comment Deleted !']);
     }
+    public function replyComment(Request $request)
+    {
+        $bawa = new Comment;
+        $user = Auth::user();
+        $bawa->id_article = $request->id_article;
+        $bawa->id_user = $user->id;
+        $bawa->comment = $request->comment;
+        $bawa->id_comment_parent = $request->id_comment_parent;
+
+        $bawa->save();
+        return back()->with(['success' => 'Reply insert Success !']);
+    }
 }
