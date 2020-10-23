@@ -18,6 +18,7 @@
   <!-- Date/Time -->
   <p>Posted on {{ $article->created_at}}</p>
 
+
   <hr>
 
   <!-- Preview Image -->
@@ -28,6 +29,18 @@
   <!-- Post Content -->
   <p class="lead">{{ $article->content}}</p>
 
+  <hr>
+  {{-- LIKE CONTENT --}}
+  <input type="hidden" id="total_likes" value="{{$jumlah_likes->jumlah_likes}}">
+  <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+  <img onclick="like({{$article->id}},{{@$user->id}})" class="like"
+    style="width: 5%;cursor: pointer;<?php if(!empty($cek_likes)){ echo 'display:none;';} ?>"
+    src="{{ asset('/images/hatipolos.png') }}" alt="">
+
+  <img onclick="unlike({{$article->id}})" class="unlike"
+    style="width: 5%;<?php if(empty($cek_likes)){ echo 'display:none;';} ?>cursor: pointer;"
+    src="{{ asset('/images/hatimerah.png') }}" alt="">
+  <span class="badge badge-light" id="tampil_likes">{{$jumlah_likes->jumlah_likes}}</span>
 
   <hr>
   @if ($message = Session::get('success'))
@@ -191,6 +204,71 @@
     </div>
   </div>
 </div>
+<script>
+  function like(key,cek){
+    if(cek){
+      $.ajax({
+              url: "/articleLike",
+              type: "POST",
+              data: {
+                  _token: $("#csrf").val(),
+                  id_article: key
+              },
+              cache: false,
+              success: function(dataResult){
+                  console.log(dataResult);
+                  var dataResult = JSON.parse(dataResult);
+                  if(dataResult.statusCode==200){
+                    $(".like").hide();
+                    $(".unlike").show();
+                    $('#total_likes').val(parseInt($('#total_likes').val())+1);
+                    $("#tampil_likes").html($('#total_likes').val());
+
+                  }
+                  else if(dataResult.statusCode==201){
+                     alert("Error occured !");
+                  }
+                  
+              }
+          });
+        }else{
+          alert('Mohon login terlebih dahulu !');
+    
+    }
+  }
+  function unlike(key){
+    $.ajax({
+              url: "/articleUnlike",
+              type: "POST",
+              data: {
+                  _token: $("#csrf").val(),
+                  id_article: key
+              },
+              cache: false,
+              success: function(dataResult){
+                  console.log(dataResult);
+                  var dataResult = JSON.parse(dataResult);
+                  if(dataResult.statusCode==200){
+                    $('#total_likes').val(parseInt($('#total_likes').val())-1);
+                    $("#tampil_likes").html( $('#total_likes').val());
+                    $(".unlike").hide();
+                    $(".like").show();	
+
+                  }
+                  else if(dataResult.statusCode==201){
+                     alert("Error occured !");
+                  }
+                  
+              }
+          });
+  };
+  $(".unlike").click(function(evt)
+  {
+  $(".unlike").hide();
+  $(".like").show();
+  evt.preventDefault();
+  });
+</script>
 <script type="text/javascript">
   <?php
       for ($i=1; $i < $total; $i++) { 

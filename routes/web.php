@@ -18,6 +18,9 @@ Route::post('updateComment', 'ArticleController@updateComment');
 Route::post('deleteComment', 'ArticleController@deleteComment');
 Route::post('replyComment', 'ArticleController@replyComment');
 
+Route::post('articleLike', 'ArticleController@articleLike');
+Route::post('articleUnlike', 'ArticleController@articleUnlike');
+
 Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');
 Route::get('/', 'HomeController');

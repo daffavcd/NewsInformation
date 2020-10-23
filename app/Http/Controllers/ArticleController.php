@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use App\Article;
 use App\Comment;
+use App\Like;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -19,10 +20,21 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $temp = Article::find($request->id);
+        $user = Auth::user();
         $kategori = DB::table('articles')
-            ->groupBy('category')
+        ->groupBy('category')
             ->get();
 
+        $jumlah_likes = DB::table('likes')
+            ->select(DB::raw('count(*) as jumlah_likes'))
+            ->where('id_article', $request->id)
+            ->first();
+        @$cek_likes = DB::table('likes')
+            ->select('*')
+            ->where('id_article', $request->id)
+            ->where('id_user', $user->id)
+            ->first();
+        $total = 1;
         $comment = DB::table('comments')
             ->leftJoin('users', 'users.id', '=', 'comments.id_user')
             ->select('*', 'comments.id AS id_comment', 'users.id AS id_user')
@@ -48,15 +60,39 @@ class ArticleController extends Controller
             $anak_comment[$i] = ${"comment_child_" . ($i + 1)};
         }
 
-        $user = Auth::user();
         $data = array(
             'article' => $temp,
             'comment' => $comment,
             'anak_comment' => $anak_comment,
             'kategori' => $kategori,
-            'user' => $user
+            'user' => $user,
+            'jumlah_likes' => $jumlah_likes,
+            'cek_likes' => $cek_likes
         );
         return view('article', $data);
+    }
+    public function articleLike(Request $request)
+    {
+        $bawa = new Like;
+        $user = Auth::user();
+        $bawa->id_article = $request->id_article;
+        $bawa->id_user = $user->id;
+
+        $bawa->save();
+        return json_encode(array(
+            "statusCode" => 200,
+        ));
+    }
+    public function articleUnlike(Request $request)
+    {
+        $user = Auth::user();
+        DB::table('likes')
+            ->where('id_article', $request->id_article)
+            ->where('id_user', $user->id)
+            ->delete();
+        return json_encode(array(
+            "statusCode" => 200,
+        ));
     }
     public function insertComment(Request $request)
     {
