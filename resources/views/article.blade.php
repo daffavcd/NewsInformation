@@ -73,7 +73,10 @@
     <div class="media-body" style="display: grid;">
       <div style="display:block">
         <h5 class="mt-0" style="float: left">{{$item->name}}</h5>
-
+        <?php
+        if(auth()->check()){
+          ?>
+        {{-- DROPDOWN ACTION KOMEN --}}
         <div class="btn-group" style="float:right;">
           <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -84,20 +87,20 @@
               </path>
             </svg>
           </button>
+
           <div class="dropdown-menu">
             <a class="dropdown-item reply_{{$total}}" href="#">Reply</a>
             <?php
-            if(auth()->check()){
               if($user->id==$item->id_user){
               ?>
             <a class="dropdown-item edit_{{$total}}" href="#">Edit</a>
             <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
             <?php
             }
-            }
             ?>
           </div>
         </div>
+        <?php } ?>
 
       </div>
       <div id="komen_{{$total}}">
@@ -107,7 +110,7 @@
         if(auth()->check()){
           if($user->id==$item->id_user){
           ?>
-          {{-- UPDATE FORM KOMEN PARENT --}}
+      {{-- UPDATE FORM KOMEN PARENT --}}
       <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/updateComment">
           @csrf
@@ -123,6 +126,7 @@
       <?php
     } 
     }
+        if(auth()->check()){
       ?>
       {{-- FORM REPLY KOMEN --}}
       <div style="display: block;margin-top: 10px;">
@@ -138,6 +142,9 @@
             class="btn btn-sm btn-light cancel_reply_komen_{{$total}}">Cancel</button>
         </form>
       </div>
+      <?php 
+        }
+        ?>
       {{-- TAMPIL CHILD KOMEN --}}
       @foreach ($anak_comment[$index] as $item)
 
@@ -188,7 +195,6 @@
   <?php
       for ($i=1; $i < $total; $i++) { 
         ?>
-        // EDIT SHOW KOMEN JQUERY
   $(".edit_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").show("slow");
@@ -196,7 +202,6 @@
   $("#komen_<?php echo $i ?>").hide();
   evt.preventDefault();
   });
-        // CANCEL EDIT KOMEN JQUERY
   $(".cancel_komen_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").hide();
@@ -204,15 +209,12 @@
   $("#komen_<?php echo $i ?>").show();
   evt.preventDefault();
   });
-        // REPLY SHOW KOMEN JQUERY
-
   $(".reply_<?php echo $i ?>").click(function(evt)
   {
   $(".reply_komen_<?php echo $i ?>").show("slow");
   $(".cancel_reply_komen_<?php echo $i ?>").show("slow");
   evt.preventDefault();
   });
-        // CANCEL REPLY JQUERY
   $(".cancel_reply_komen_<?php echo $i ?>").click(function(evt)
   {
   $(".reply_komen_<?php echo $i ?>").hide();
