@@ -41,6 +41,10 @@
     style="width: 5%;<?php if(empty($cek_likes)){ echo 'display:none;';} ?>cursor: pointer;"
     src="{{ asset('/images/hatimerah.png') }}" alt="">
   <span class="badge badge-light" id="tampil_likes">{{$jumlah_likes->jumlah_likes}}</span>
+  {{-- KOMEN CLICK CONTENT --}}
+  <img onclick="buka_komen({{@$user->id}})" style="width: 5%;cursor: pointer; ?>"
+    src="{{ asset('/images/speech-bubble.png') }}" alt="">
+  <span class="badge badge-light">{{$jumlah_comment->jumlah}}</span>
 
   <hr>
   @if ($message = Session::get('success'))
@@ -53,7 +57,7 @@
 
   {{-- FORM INPUT KOMEN --}}
   @if(auth()->check())
-  <div class="card my-4">
+  <div class="card my-4" id="buka_komen" style="display: none">
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
       <form method="POST" action="/insertComment">
@@ -64,13 +68,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    </div>
-  </div>
-  @else
-  <div class="card my-4">
-    <h5 class="card-header">Leave a Comment:</h5>
-    <div class="card-body">
-      <h5>You need to login first to leave a comment.</h5>
     </div>
   </div>
   @endif
@@ -205,6 +202,13 @@
   </div>
 </div>
 <script>
+  function buka_komen(key){
+    if(key){
+      $('#buka_komen').show('slow');
+    }else{
+      alert('Please login first to continued !');
+    }
+  }
   function like(key,cek){
     if(cek){
       $.ajax({
@@ -232,7 +236,7 @@
               }
           });
         }else{
-          alert('Mohon login terlebih dahulu !');
+          alert('Please login first to continued !');
     
     }
   }

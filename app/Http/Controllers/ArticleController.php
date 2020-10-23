@@ -35,6 +35,11 @@ class ArticleController extends Controller
             ->where('id_user', $user->id)
             ->first();
         $total = 1;
+        $jumlah_comment = DB::table('comments')
+            ->select(DB::raw('count(*) as jumlah'))
+            ->where('id_article', $request->id)
+            ->first();
+
         $comment = DB::table('comments')
             ->leftJoin('users', 'users.id', '=', 'comments.id_user')
             ->select('*', 'comments.id AS id_comment', 'users.id AS id_user')
@@ -65,6 +70,7 @@ class ArticleController extends Controller
             'comment' => $comment,
             'anak_comment' => $anak_comment,
             'kategori' => $kategori,
+            'jumlah_comment' => $jumlah_comment,
             'user' => $user,
             'jumlah_likes' => $jumlah_likes,
             'cek_likes' => $cek_likes
