@@ -101,11 +101,13 @@
           <div class="dropdown-menu">
             <a class="dropdown-item reply_{{$total}}" href="#">Reply</a>
             <?php
+            if(auth()->check()){
               if($user->id==$item->id_user){
               ?>
             <a class="dropdown-item edit_{{$total}}" href="#">Edit</a>
             <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
             <?php
+              }
             }
             ?>
           </div>
@@ -166,6 +168,9 @@
         <div class="media-body" style="display: grid;">
           <div style="display: block">
             <h5 class="mt-0" style="float: left">{{$item->name}}</h5>
+            <?php
+            if(auth()->check()){
+              ?>
             <div class="btn-group" style="float:right;">
               <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -184,11 +189,15 @@
                 <a class="dropdown-item edit_{{$total}}_{{$total_child}}" href="#">Edit</a>
                 <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
                 <?php
-              }
+                }
+              
               
               ?>
               </div>
             </div>
+            <?php 
+            }
+            ?>
           </div>
           <div id="komen_{{$total}}_{{$total_child}}">
             {{$item->comment}}
@@ -346,7 +355,7 @@
   });
   <?php 
         }
-        ?>  
+        ?>
   $(".edit_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").show("slow");
