@@ -1,8 +1,5 @@
 @extends('layouts.parent')
 @section('content')
-<div class="container mt-5">
-
-    <div class="row mt-md-3">
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
@@ -22,21 +19,13 @@
                 </div>
                 <div class="card-footer text-muted">
                     Posted on {{$item->created_at}} |
-                    <a href="#">{{$item->category}}</a>
+                    <a href="/category/{{$item->category}}">{{$item->category}}</a>
                 </div>
             </div>
             @endforeach
 
 
             <!-- Pagination -->
-            <ul class="pagination justify-content-center mb-4">
-                <li class="page-item">
-                    <a class="page-link" href="#">&larr; Older</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Newer &rarr;</a>
-                </li>
-            </ul>
 
         </div>
 

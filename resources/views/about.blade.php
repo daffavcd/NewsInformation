@@ -1,8 +1,5 @@
 @extends('layouts.parent')
 @section('content')
-<div class="container mt-5">
-
-    <div class="row mt-md-3">
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
