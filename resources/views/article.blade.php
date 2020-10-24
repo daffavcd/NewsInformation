@@ -18,7 +18,6 @@
   <!-- Date/Time -->
   <p>Posted on {{ $article->created_at}}</p>
 
-
   <hr>
 
   <!-- Preview Image -->
@@ -34,11 +33,11 @@
   <input type="hidden" id="total_likes" value="{{$jumlah_likes->jumlah_likes}}">
   <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
   <img onclick="like({{$article->id}},{{@$user->id}})" class="like"
-    style="width: 5%;cursor: pointer;<?php if(!empty($cek_likes)){ echo 'display:none;';} ?>"
+    style="width: 5%;cursor: pointer;<?php if (!empty($cek_likes)) { echo 'display:none;';  } ?>"
     src="{{ asset('/images/hatipolos.png') }}" alt="">
 
   <img onclick="unlike({{$article->id}})" class="unlike"
-    style="width: 5%;<?php if(empty($cek_likes)){ echo 'display:none;';} ?>cursor: pointer;"
+    style="width: 5%;<?php if (empty($cek_likes)) { echo 'display:none;'; } ?>cursor: pointer;"
     src="{{ asset('/images/hatimerah.png') }}" alt="">
   <span class="badge badge-light" id="tampil_likes">{{$jumlah_likes->jumlah_likes}}</span>
   {{-- KOMEN CLICK CONTENT --}}
@@ -84,8 +83,8 @@
       <div style="display:block">
         <h5 class="mt-0" style="float: left">{{$item->name}}</h5>
         <?php
-        if(auth()->check()){
-          ?>
+        if (auth()->check()) {
+        ?>
         {{-- DROPDOWN ACTION KOMEN --}}
         <div class="btn-group" style="float:right;">
           <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true"
@@ -101,15 +100,15 @@
           <div class="dropdown-menu">
             <a class="dropdown-item reply_{{$total}}" href="#">Reply</a>
             <?php
-            if(auth()->check()){
-              if($user->id==$item->id_user){
+              if (auth()->check()) {
+                if ($user->id == $item->id_user) {
               ?>
             <a class="dropdown-item edit_{{$total}}" href="#">Edit</a>
-            <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
+            <a class="dropdown-item delet" style="cursor: pointer" onclick="delet({{$item->id_comment}})">Delete</a>
             <?php
+                }
               }
-            }
-            ?>
+              ?>
           </div>
         </div>
         <?php } ?>
@@ -119,9 +118,9 @@
         {{$item->comment}}
       </div>
       <?php
-        if(auth()->check()){
-          if($user->id==$item->id_user){
-          ?>
+      if (auth()->check()) {
+        if ($user->id == $item->id_user) {
+      ?>
       {{-- UPDATE FORM KOMEN PARENT --}}
       <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/updateComment">
@@ -136,10 +135,10 @@
         </form>
       </div>
       <?php
-    } 
-    }
-        if(auth()->check()){
-      ?>
+        }
+      }
+      if (auth()->check()) {
+        ?>
       {{-- FORM REPLY KOMEN --}}
       <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/replyComment">
@@ -154,10 +153,10 @@
             class="btn btn-sm btn-light cancel_reply_komen_{{$total}}">Cancel</button>
         </form>
       </div>
-      <?php 
-        }
-        
-        ?>
+      <?php
+      }
+
+      ?>
       {{-- TAMPIL CHILD KOMEN --}}
       @php
       $total_child=1;
@@ -169,8 +168,8 @@
           <div style="display: block">
             <h5 class="mt-0" style="float: left">{{$item->name}}</h5>
             <?php
-            if(auth()->check()){
-              ?>
+            if (auth()->check()) {
+            ?>
             <div class="btn-group" style="float:right;">
               <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -184,18 +183,17 @@
 
               <div class="dropdown-menu">
                 <?php
-                if($user->id==$item->id_user){
-                ?>
+                  if ($user->id == $item->id_user) {
+                  ?>
                 <a class="dropdown-item edit_{{$total}}_{{$total_child}}" href="#">Edit</a>
-                <a class="dropdown-item delet" onclick="delet({{$item->id_comment}})" href="#">Delete</a>
+                <a class="dropdown-item delet" style="cursor: pointer" onclick="delet({{$item->id_comment}})">Delete</a>
                 <?php
-                }
-              
-              
-              ?>
+                  }
+
+                  ?>
               </div>
             </div>
-            <?php 
+            <?php
             }
             ?>
           </div>
@@ -203,8 +201,8 @@
             {{$item->comment}}
           </div>
           <?php
-        if(auth()->check()){
-          if($user->id==$item->id_user){
+          if (auth()->check()) {
+            if ($user->id == $item->id_user) {
           ?>
           {{-- UPDATE FORM KOMEN CHILD --}}
           <div style="display: block;margin-top: 10px;">
@@ -220,10 +218,10 @@
             </form>
           </div>
           <?php
-    } 
-    }
-    $total_child+=1;
-    ?>
+            }
+          }
+          $total_child += 1;
+          ?>
         </div>
       </div>
       @endforeach
@@ -231,8 +229,8 @@
     </div>
   </div>
   <?php
-  $total+=1;
-  $index+=1;
+  $total += 1;
+  $index += 1;
   ?>
   @endforeach
 </div>
@@ -263,82 +261,80 @@
   </div>
 </div>
 <script>
-  function buka_komen(key){
-    if(key){
-      $('#buka_komen').show('slow');
-    }else{
+  function buka_komen(key) {
+    if (key) {
+      $('#buka_komen').fadeToggle();
+    } else {
       alert('Please login first to continued !');
     }
   }
-  function like(key,cek){
-    if(cek){
-      $.ajax({
-              url: "/articleLike",
-              type: "POST",
-              data: {
-                  _token: $("#csrf").val(),
-                  id_article: key
-              },
-              cache: false,
-              success: function(dataResult){
-                  console.log(dataResult);
-                  var dataResult = JSON.parse(dataResult);
-                  if(dataResult.statusCode==200){
-                    $(".like").hide();
-                    $(".unlike").show();
-                    $('#total_likes').val(parseInt($('#total_likes').val())+1);
-                    $("#tampil_likes").html($('#total_likes').val());
 
-                  }
-                  else if(dataResult.statusCode==201){
-                     alert("Error occured !");
-                  }
-                  
-              }
-          });
-        }else{
-          alert('Please login first to continued !');
-    
+  function like(key, cek) {
+    if (cek) {
+      $.ajax({
+        url: "/articleLike",
+        type: "POST",
+        data: {
+          _token: $("#csrf").val(),
+          id_article: key
+        },
+        cache: false,
+        success: function(dataResult) {
+          console.log(dataResult);
+          var dataResult = JSON.parse(dataResult);
+          if (dataResult.statusCode == 200) {
+            $(".like").hide();
+            $(".unlike").show();
+            $('#total_likes').val(parseInt($('#total_likes').val()) + 1);
+            $("#tampil_likes").html($('#total_likes').val());
+
+          } else if (dataResult.statusCode == 201) {
+            alert("Error occured !");
+          }
+
+        }
+      });
+    } else {
+      alert('Please login first to continued !');
+
     }
   }
-  function unlike(key){
-    $.ajax({
-              url: "/articleUnlike",
-              type: "POST",
-              data: {
-                  _token: $("#csrf").val(),
-                  id_article: key
-              },
-              cache: false,
-              success: function(dataResult){
-                  console.log(dataResult);
-                  var dataResult = JSON.parse(dataResult);
-                  if(dataResult.statusCode==200){
-                    $('#total_likes').val(parseInt($('#total_likes').val())-1);
-                    $("#tampil_likes").html( $('#total_likes').val());
-                    $(".unlike").hide();
-                    $(".like").show();	
 
-                  }
-                  else if(dataResult.statusCode==201){
-                     alert("Error occured !");
-                  }
-                  
-              }
-          });
+  function unlike(key) {
+    $.ajax({
+      url: "/articleUnlike",
+      type: "POST",
+      data: {
+        _token: $("#csrf").val(),
+        id_article: key
+      },
+      cache: false,
+      success: function(dataResult) {
+        console.log(dataResult);
+        var dataResult = JSON.parse(dataResult);
+        if (dataResult.statusCode == 200) {
+          $('#total_likes').val(parseInt($('#total_likes').val()) - 1);
+          $("#tampil_likes").html($('#total_likes').val());
+          $(".unlike").hide();
+          $(".like").show();
+
+        } else if (dataResult.statusCode == 201) {
+          alert("Error occured !");
+        }
+
+      }
+    });
   };
-  $(".unlike").click(function(evt)
-  {
-  $(".unlike").hide();
-  $(".like").show();
-  evt.preventDefault();
-  });
+
+  function delet(key, evt) {
+    $('#deletemodal').modal('show');
+    $('#idcomment').val(key);
+    evt.preventDefault();
+  };
 </script>
 <script type="text/javascript">
-  <?php
-      for ($i=1; $i < $total; $i++) { 
-      for ($j=1; $j <= $i; $j++) { 
-        ?>
+  <?php for ($i = 1; $i < $total; $i++) {
+    for ($j = 1; $j <= $i; $j++) { ?>
   $(".edit_<?php echo $i ?>_<?php echo $j ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>_<?php echo $j ?>").show("slow");
@@ -353,12 +349,12 @@
   $("#komen_<?php echo $i ?>_<?php echo $j ?>").show();
   evt.preventDefault();
   });
-  <?php 
-        }
-        ?>
+  <?php } ?>
   $(".edit_<?php echo $i ?>").click(function(evt)
   {
   $(".edit_komen_<?php echo $i ?>").show("slow");
+  $(".reply_komen_<?php echo $i ?>").hide();
+  $(".cancel_reply_komen_<?php echo $i ?>").hide();
   $(".cancel_komen_<?php echo $i ?>").show("slow");
   $("#komen_<?php echo $i ?>").hide();
   evt.preventDefault();
@@ -373,6 +369,9 @@
   $(".reply_<?php echo $i ?>").click(function(evt)
   {
   $(".reply_komen_<?php echo $i ?>").show("slow");
+  $(".edit_komen_<?php echo $i ?>").hide();
+  $(".cancel_komen_<?php echo $i ?>").hide();
+  $("#komen_<?php echo $i ?>").show();
   $(".cancel_reply_komen_<?php echo $i ?>").show("slow");
   evt.preventDefault();
   });
@@ -382,14 +381,6 @@
   $(".cancel_reply_komen_<?php echo $i ?>").hide();
   evt.preventDefault();
   });
-  <?php
-      }
-       ?>
-  function
-  delet(key,evt){
-  $('#deletemodal').modal('show');
-  $('#idcomment').val(key);
-  evt.preventDefault();
-  };
+  <?php } ?>
 </script>
 @endsection
