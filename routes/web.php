@@ -33,4 +33,7 @@ Route::get('/logout','Auth\LoginController@logout');
 
 // ADMIN ROUTE
 Route::get('/admin','Admin\HomeController'); 
+Route::get('/admin/article','Admin\ArticleController@index'); 
+Route::get('/admin/article/create','Admin\ArticleController@create'); 
+Route::post('/admin/article','Admin\ArticleController@index'); 
 // ------------------------

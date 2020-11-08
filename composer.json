@@ -12,7 +12,8 @@
         "almasaeed2010/adminlte": "~3.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18.35",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "doctrine/dbal": "^2.4.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
