@@ -30,3 +30,7 @@ Route::get('/profile','ProfileController');
 // AUTH ROUTE
 Route::get('/logout','Auth\LoginController@logout'); 
 // ------------------------
+
+// ADMIN ROUTE
+Route::get('/admin','Admin\HomeController'); 
+// ------------------------
