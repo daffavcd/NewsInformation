@@ -14,8 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article = App\Article::all();
-        return view('admin\article\index', $article);
+        $article = \App\Article::all();
+        return view('admin\article\index', ['article' => $article]);
     }
 
     /**

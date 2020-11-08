@@ -191,13 +191,13 @@
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item ">
-                                    <a href="pages/forms/general.html" class="nav-link active">
+                                    <a href="/admin/article" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Show Data</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/forms/advanced.html" class="nav-link">
+                                    <a href="/admin/article/create" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add Data</p>
                                     </a>
@@ -246,6 +246,7 @@
         "autoWidth": false,
         "responsive": true,
       });
+      bsCustomFileInput.init();
     });
 </script>
 
