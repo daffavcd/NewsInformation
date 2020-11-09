@@ -109,7 +109,7 @@
                                 <ul class="list-unstyled mb-0">
                                     @foreach ($kategori as $item)
                                     <li>
-                                        <a href="/category/{{$item->category}}">{{$item->category}}</a>
+                                        <a href="/category/{{$item->id}}">{{$item->name}}</a>
                                     </li>
                                     @endforeach
 

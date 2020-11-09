@@ -18,9 +18,7 @@ class ProfileController extends Controller
     public function __invoke(Request $request)
     {
         $user = Auth::user();
-        $kategori = DB::table('articles')
-        ->groupBy('category')
-        ->get();
+        $kategori = \App\Category::all();
         $data = array(
             'user'=> $user,
             'kategori' => $kategori

@@ -21,9 +21,7 @@ class ArticleController extends Controller
     {
         $temp = Article::find($request->id);
         $user = Auth::user();
-        $kategori = DB::table('articles')
-        ->groupBy('category')
-            ->get();
+        $kategori = \App\Category::all();
 
         $jumlah_likes = DB::table('likes')
             ->select(DB::raw('count(*) as jumlah_likes'))

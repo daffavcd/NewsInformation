@@ -39,20 +39,25 @@
                                         <th>Title</th>
                                         <th>Category Name</th>
                                         <th>Content</th>
+                                        <th>Writter</th>
                                         <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($article as $item)
+                                    @foreach ($articles as $item)
 
                                     <tr>
                                         <th>{{$loop->iteration }}</th>
                                         <td>{{$item->title}}</td>
-                                        <td>Internet
-                                            Explorer 4.0
+                                        <td>{{$item->category_name}}</td>
+                                        <td>{{substr($item->content, 0, 20)}}...</td>
+                                        <td>{{$item->admin_name}}</td>
+                                        <td>{{$item->created_at}}</td>
+                                        <td style="white-space: nowrap;">
+                                            <a href="" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                         </td>
-                                        <td>{{substr($item->content, 0, 30)}}...</td>
-                                        <td> {{$item->created_at}}</td>
                                     </tr>
                                     @endforeach
 
@@ -63,7 +68,9 @@
                                         <th>Title</th>
                                         <th>Category Name</th>
                                         <th>Content</th>
+                                        <th>Writter</th>
                                         <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

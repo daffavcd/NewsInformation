@@ -17,14 +17,19 @@ class CategoryController extends Controller
     public function __invoke(Request $request)
     {
         $temp = DB::table('articles')
-            ->where('category', $request->category)
-            ->get();
-        $kategori = DB::table('articles')
-            ->groupBy('category')
-            ->get();
+        ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+        ->select('*', 'categories.id AS category_id','articles.id AS articles_id')
+        ->where('category_id', $request->category)
+        ->orderBy('articles.id', 'desc')
+        ->get();
+        
+        $nama = \App\Category::where('id', $request->category)->first();
+
+        $kategori = \App\Category::all();
         $user = Auth::user();
         $data = array(
             'data' => $temp,
+            'nama' => $nama,
             'kategori' => $kategori,
             'user' => $user
         );

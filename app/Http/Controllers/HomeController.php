@@ -14,17 +14,20 @@ class HomeController extends Controller
     {
         // $value = Cache::rememberForever('users', function () {
         // });
-        $value = DB::table('articles')->paginate(5);
+        // $value = DB::table('articles')->paginate(5);
+        $value = DB::table('articles')
+            ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+            ->select('*', 'categories.id AS category_id','articles.id AS articles_id')
+            ->orderBy('articles.id', 'desc')
+            ->paginate(5);
+
         $user = Auth::user();
-        $kategori = DB::table('articles')
-            ->groupBy('category')
-            ->get();
+        $kategori = \App\Category::all();
         $data = array(
             'article' => $value,
             'kategori' => $kategori,
-            'user'=> $user
+            'user' => $user
         );
-        return view('home',$data);
+        return view('home', $data);
     }
-    
 }

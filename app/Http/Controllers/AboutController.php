@@ -15,9 +15,7 @@ class AboutController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $kategori = DB::table('articles')
-            ->groupBy('category')
-            ->get();
+        $kategori = \App\Category::all();
         $user = Auth::user();
         $data = array(
             'nama' => 'Muhammad Daffa A.R',

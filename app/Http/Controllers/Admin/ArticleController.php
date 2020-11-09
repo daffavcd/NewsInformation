@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class ArticleController extends Controller
 {
@@ -14,8 +18,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article = \App\Article::all();
-        return view('admin\article\index', ['article' => $article]);
+        $articles = DB::table('articles')
+            ->select('*', 'articles.id as id_article', 'categories.name as category_name', 'admins.name as admin_name')
+            ->leftJoin('admins', 'admins.id', '=', 'articles.id_admin')
+            ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+            ->orderByDesc('id_article')
+            ->get();
+        return view('admin\article\index', ['articles' => $articles]);
     }
 
     /**
@@ -25,7 +34,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('admin\article\create');
+        $ctg = \App\Category::all();
+        return view('admin\article\create', ['categories' => $ctg]);
     }
 
     /**
@@ -36,7 +46,23 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $file = $request->file('featured_image');
+        $waktu = date('ymdhis');
+        $data = new \App\Article;
+
+        $data->title = $request->title;
+        $data->content = $request->content;
+        $data->category_id = $request->category_id;
+        // $data->id_admin = $user->id;
+        $data->featured_image = $waktu . '_' . $file->getClientOriginalName();
+
+        $data->save();
+
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'images/article';
+        $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
+        return redirect('/admin/article')->with(['success' => 'Insert Article Success !']);;
     }
 
     /**

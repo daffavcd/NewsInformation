@@ -9,6 +9,32 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<style>
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+    #img-upload {
+        width: 250px;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
@@ -174,14 +200,14 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="/admin" class="nav-link  @if(Request::segment(2)==null) active @endif">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @if(Request::segment(2)=='article') menu-open @endif">
                             <a href="/admin/article" class="nav-link">
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>
@@ -189,17 +215,17 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview" style="display: none;">
+                            <ul class="nav nav-treeview" @if(Request::segment(2)!='article') style="display: none;" @endif>
                                 <li class="nav-item ">
-                                    <a href="/admin/article" class="nav-link">
+                                    <a href="/admin/article" class="nav-link  @if(Request::segment(2)=='article' && Request::segment(3)==null) active @endif">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Show Data</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/admin/article/create" class="nav-link">
+                                    <a href="/admin/article/create" class="nav-link @if(Request::segment(2)=='article' && Request::segment(3)=='create') active @endif">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Data</p>
+                                        <p>Create Data</p>
                                     </a>
                                 </li>
                             </ul>
@@ -231,7 +257,11 @@
     </div>
     <!-- ./wrapper -->
 </body>
+@yield('script')
 <script>
+    $(document).ready(function () {
+  bsCustomFileInput.init();
+});
     $(function () {
       $("#example1").DataTable({
         "responsive": true,
@@ -246,7 +276,6 @@
         "autoWidth": false,
         "responsive": true,
       });
-      bsCustomFileInput.init();
     });
 </script>
 
