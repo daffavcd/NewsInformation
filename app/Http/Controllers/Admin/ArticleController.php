@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 class ArticleController extends ControllerAdmin
@@ -61,7 +62,7 @@ class ArticleController extends ControllerAdmin
         $data->save();
 
         // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'images/article';
+        $tujuan_upload = 'images/';
         $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
         return redirect('/admin/article')->with(['success' => 'Insert Article Success !']);;
     }
@@ -85,7 +86,14 @@ class ArticleController extends ControllerAdmin
      */
     public function edit($id)
     {
-        //
+        $ctg = \App\Category::all();
+        $data = DB::table('articles')
+            ->select('*', 'articles.id as id_article', 'categories.name as category_name', 'admins.name as admin_name', 'categories.id as category_id')
+            ->leftJoin('admins', 'admins.id', '=', 'articles.id_admin')
+            ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+            ->where('articles.id', $id)
+            ->first();
+        return view('admin/article/edit',  ['data' => $data, 'ctg' => $ctg]);
     }
 
     /**
@@ -97,7 +105,21 @@ class ArticleController extends ControllerAdmin
      */
     public function update(Request $request, $id)
     {
-        //
+        $bawa = Article::find($id);
+
+        $file = $request->file('featured_image');
+        if (!empty($file)) {
+            unlink(public_path('images/' . $bawa->featured_image));
+            $waktu = date('ymdhis');
+            $bawa->featured_image = $waktu . '_' . $file->getClientOriginalName();
+            $tujuan_upload = 'images/';
+            $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
+        }
+        $bawa->title = $request->title;
+        $bawa->content = $request->content;
+        $bawa->category_id = $request->category_id;
+        $bawa->save();
+        return redirect('/admin/article')->with(['success' => 'Article Update Success !']);
     }
 
     /**
@@ -106,8 +128,12 @@ class ArticleController extends ControllerAdmin
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $flight = Article::find($request->id);
+
+        unlink(public_path('images/' . $flight->featured_image));
+        $flight->delete();
+        return back()->with(['success' => 'Article Deleted !']);
     }
 }

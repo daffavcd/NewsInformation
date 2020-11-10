@@ -8,13 +8,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Article</h1>
+                    <h1>Edit Article</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="/admin/article">Article</a></li>
-                        <li class="breadcrumb-item active">Create Data</li>
+                        <li class="breadcrumb-item active">Edit Data</li>
                     </ol>
                 </div>
             </div>
@@ -30,28 +30,33 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Create Article</h3>
+                            <h3 class="card-title">Edit Article</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="/admin/article" enctype="multipart/form-data">
+                        <form method="POST" action="/admin/article/{{{$data->id_article}}}"
+                            enctype="multipart/form-data">
+                            @method('PUT')
                             @csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Title</label>
-                                            <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                                placeholder="Enter title" required>
+                                            <input type="text" name="title" value="{{$data->title}}"
+                                                class="form-control" id="exampleInputEmail1" placeholder="Enter title"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Category</label>
-                                            <select name="category_id" class="form-control" id="exampleInputPassword1" required>
+                                            <select name="category_id" class="form-control" id="exampleInputPassword1"
+                                                required>
                                                 <option value="">Choose Category</option>
-                                                @foreach ($categories as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                @foreach ($ctg as $item)
+                                                <option value="{{$item->id}}" @if($item->id==$data->category_id)
+                                                    selected @endif >{{$item->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -60,7 +65,7 @@
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Content</label>
                                             <textarea name="content" id="" class="form-control"
-                                                placeholder="Enter the content" required></textarea>
+                                                placeholder="Enter the content" required>{{$data->content}}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -68,7 +73,8 @@
                                             <label for="exampleInputFile">Upload Image</label>
                                             <div class="input-group btn-file">
                                                 <div class="custom-file">
-                                                    <input type="file" name="featured_image" required class="custom-file-input" id="imgInp">
+                                                    <input type="file" name="featured_image" 
+                                                        class="custom-file-input" id="imgInp">
                                                     <label class="custom-file-label" for="exampleInputFile">Choose
                                                         file</label>
                                                 </div>
@@ -77,7 +83,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img id='img-upload' />
+                                        <img id='img-upload' src="{{ asset('/images/'.$data->featured_image) }}" />
                                     </div>
                                 </div>
                             </div>

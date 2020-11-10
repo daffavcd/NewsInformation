@@ -32,11 +32,12 @@ Route::get('/logout','Auth\LoginController@logout');
 // ------------------------
 
 // ADMIN ROUTE
+Route::resources([
+    'admin/article' => 'Admin\ArticleController'
+]);
+Route::post('/admin/article/delete', 'Admin\ArticleController@destroy');
 Route::post('/admin/loginAdmin', 'Admin\LoginController@adminLogin');
 Route::post('/admin/logoutAdmin', 'Admin\LoginController@logout');
 Route::get('/login/admin', 'Admin\LoginController@showAdminLoginForm');
-Route::get('/admin','Admin\HomeController'); 
-Route::get('/admin/article','Admin\ArticleController@index'); 
-Route::get('/admin/article/create','Admin\ArticleController@create'); 
-Route::post('/admin/article','Admin\ArticleController@store'); 
+Route::get('/admin','Admin\HomeController');
 // ------------------------

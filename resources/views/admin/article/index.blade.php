@@ -55,8 +55,8 @@
                                         <td>{{$item->admin_name}}</td>
                                         <td>{{$item->created_at}}</td>
                                         <td style="white-space: nowrap;">
-                                            <a href="" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                            <a href="/admin/article/{{$item->id_article}}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                            <div style="cursor: pointer" onclick="delet({{$item->id_article}})" class="btn btn-danger"><i class="fa fa-trash"></i></div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -87,5 +87,35 @@
     </section>
     <!-- /.content -->
 </div>
-
+<div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert ! </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Are you sure you want to delete this article ? </p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="/admin/article/delete">
+                    @csrf
+                    <input type="hidden" id="id_article" name="id" value="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function delet(key, evt) {
+    $('#deletemodal').modal('show');
+    $('#id_article').val(key);
+    evt.preventDefault();
+  };
+</script>
 @endsection
