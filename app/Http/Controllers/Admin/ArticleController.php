@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-class ArticleController extends Controller
+class ArticleController extends ControllerAdmin
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $articles = DB::table('articles')

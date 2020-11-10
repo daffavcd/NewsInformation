@@ -32,6 +32,9 @@ Route::get('/logout','Auth\LoginController@logout');
 // ------------------------
 
 // ADMIN ROUTE
+Route::post('/admin/loginAdmin', 'Admin\LoginController@adminLogin');
+Route::post('/admin/logoutAdmin', 'Admin\LoginController@logout');
+Route::get('/login/admin', 'Admin\LoginController@showAdminLoginForm');
 Route::get('/admin','Admin\HomeController'); 
 Route::get('/admin/article','Admin\ArticleController@index'); 
 Route::get('/admin/article/create','Admin\ArticleController@create'); 

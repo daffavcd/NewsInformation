@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends ControllerAdmin
 {
     /**
      * Handle the incoming request.
