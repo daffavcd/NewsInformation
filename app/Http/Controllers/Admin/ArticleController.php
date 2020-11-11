@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
+use PDF;
 
 class ArticleController extends ControllerAdmin
 {
@@ -136,4 +137,18 @@ class ArticleController extends ControllerAdmin
         $flight->delete();
         return back()->with(['success' => 'Article Deleted !']);
     }
+    function pdf(Request $request)
+    {
+        $article = DB::table('articles')
+        ->select('*', 'articles.id as id_article', 'categories.name as category_name', 'admins.name as admin_name')
+        ->leftJoin('admins', 'admins.id', '=', 'articles.id_admin')
+        ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+        ->where('articles.id', $request->id)
+        ->first();
+        // return view('admin/article/dynamic_pdf', ['article' => $article]);
+        
+        $pdf = PDF::loadview('admin/article/dynamic_pdf', ['article' => $article]);
+        return $pdf->download($article->title.'_'.date('ymd').'.pdf');
+    }
+
 }

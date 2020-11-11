@@ -35,6 +35,7 @@ Route::get('/logout','Auth\LoginController@logout');
 Route::resources([
     'admin/article' => 'Admin\ArticleController'
 ]);
+Route::get('/admin/article/{id}/pdf', 'Admin\ArticleController@pdf');
 Route::post('/admin/article/delete', 'Admin\ArticleController@destroy');
 Route::post('/admin/loginAdmin', 'Admin\LoginController@adminLogin');
 Route::post('/admin/logoutAdmin', 'Admin\LoginController@logout');

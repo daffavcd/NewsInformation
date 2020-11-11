@@ -57,6 +57,7 @@
                                         <td style="white-space: nowrap;">
                                             <a href="/admin/article/{{$item->id_article}}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                                             <div style="cursor: pointer" onclick="delet({{$item->id_article}})" class="btn btn-danger"><i class="fa fa-trash"></i></div>
+                                            <a href="/admin/article/{{$item->id_article}}/pdf" style="cursor: pointer" target="_blank"  class="btn btn-light"><i class="fa fa-file-pdf-o"></i></div>
                                         </td>
                                     </tr>
                                     @endforeach
