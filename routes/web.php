@@ -29,6 +29,8 @@ Route::get('/profile','ProfileController');
 
 // AUTH ROUTE
 Route::get('/logout','Auth\LoginController@logout'); 
+Route::get('login/google', 'Auth\LoginController@redirectToProvider');
+Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 // ------------------------
 
 // ADMIN ROUTE
