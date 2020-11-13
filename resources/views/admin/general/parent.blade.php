@@ -70,7 +70,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/logout">
+                    <a class="nav-link" href="/admin/logoutAdmin">
                         <i class="fa fa-sign-out "></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
