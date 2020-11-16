@@ -34,7 +34,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="/admin/article" enctype="multipart/form-data">
+                        <form method="POST" autocomplete="off" action="/admin/article" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row">

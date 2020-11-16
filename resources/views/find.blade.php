@@ -14,7 +14,7 @@
             $jumlah_comment = App\Comment::select(DB::raw('count(*) as jumlah'))->where('id_article', $item->articles_id)->first()
             ?>
     <div class="card mb-4">
-        <img class="card-img-top" src="{{ asset('/images/'.$item->featured_image) }}" alt="Card image cap">
+        <img class="card-img-top" src="{{ asset('storage/articleImages/'.$item->featured_image) }}" alt="Card image cap">
         <div class="card-body">
             <h2 class="card-title">{{$item->title}}</h2>
             <p class="card-text">{{$item->content}}</p>

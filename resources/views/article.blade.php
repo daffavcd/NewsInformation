@@ -21,7 +21,7 @@
   <hr>
 
   <!-- Preview Image -->
-  <img class="img-fluid rounded" src="{{ asset('/images/'.$article->featured_image) }}" alt="">
+  <img class="img-fluid rounded" src="{{ asset('storage/articleImages/'.$article->featured_image) }}" alt="">
 
   <hr>
 

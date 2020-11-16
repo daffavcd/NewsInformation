@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use PDF;
@@ -49,22 +50,25 @@ class ArticleController extends ControllerAdmin
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $file = $request->file('featured_image');
         $waktu = date('ymdhis');
         $data = new \App\Article;
-
+        $name_file = $waktu . '_' . $request->file('featured_image')->getClientOriginalName();
         $data->title = $request->title;
         $data->content = $request->content;
         $data->category_id = $request->category_id;
-        // $data->id_admin = $user->id;
-        $data->featured_image = $waktu . '_' . $file->getClientOriginalName();
+        $data->id_admin = $user->id;
+        $data->featured_image = $name_file;
 
         $data->save();
-
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'images/';
-        $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
+        $request->file('featured_image')->storeAs(
+            'articleImages',
+            $name_file,
+            'public'
+        );
+        // $tujuan_upload = 'images/';
+        // $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
         return redirect('/admin/article')->with(['success' => 'Insert Article Success !']);;
     }
 
@@ -110,11 +114,16 @@ class ArticleController extends ControllerAdmin
 
         $file = $request->file('featured_image');
         if (!empty($file)) {
-            unlink(public_path('images/' . $bawa->featured_image));
+            Storage::disk('public')->delete('articleImages/' . $bawa->featured_image);
             $waktu = date('ymdhis');
-            $bawa->featured_image = $waktu . '_' . $file->getClientOriginalName();
-            $tujuan_upload = 'images/';
-            $file->move($tujuan_upload, $waktu . '_' . $file->getClientOriginalName());
+
+            $name_file = $waktu . '_' . $request->file('featured_image')->getClientOriginalName();
+            $bawa->featured_image = $name_file;
+            $request->file('featured_image')->storeAs(
+                'articleImages',
+                $name_file,
+                'public'
+            );
         }
         $bawa->title = $request->title;
         $bawa->content = $request->content;
@@ -132,23 +141,21 @@ class ArticleController extends ControllerAdmin
     public function destroy(Request $request)
     {
         $flight = Article::find($request->id);
-
-        unlink(public_path('images/' . $flight->featured_image));
+        Storage::disk('public')->delete('articleImages/' . $flight->featured_image);
         $flight->delete();
         return back()->with(['success' => 'Article Deleted !']);
     }
     function pdf(Request $request)
     {
         $article = DB::table('articles')
-        ->select('*', 'articles.id as id_article', 'categories.name as category_name', 'admins.name as admin_name')
-        ->leftJoin('admins', 'admins.id', '=', 'articles.id_admin')
-        ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
-        ->where('articles.id', $request->id)
-        ->first();
+            ->select('*', 'articles.id as id_article', 'categories.name as category_name', 'admins.name as admin_name')
+            ->leftJoin('admins', 'admins.id', '=', 'articles.id_admin')
+            ->leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+            ->where('articles.id', $request->id)
+            ->first();
         // return view('admin/article/dynamic_pdf', ['article' => $article]);
-        
-        $pdf = PDF::loadview('admin/article/dynamic_pdf', ['article' => $article]);
-        return $pdf->download($article->title.'_'.date('ymd').'.pdf');
-    }
 
+        $pdf = PDF::loadview('admin/article/dynamic_pdf', ['article' => $article]);
+        return $pdf->download($article->title . '_' . date('ymd') . '.pdf');
+    }
 }

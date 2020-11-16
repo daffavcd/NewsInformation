@@ -83,7 +83,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img id='img-upload' src="{{ asset('/images/'.$data->featured_image) }}" />
+                                        <img id='img-upload' src="{{ asset('storage/articleImages/'.$data->featured_image) }}" />
                                     </div>
                                 </div>
                             </div>

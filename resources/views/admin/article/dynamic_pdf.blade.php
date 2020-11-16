@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Laravel - How to Generate Dynamic PDF from HTML using DomPDF</title>
     <style type="text/css">
         hr {
@@ -84,7 +84,7 @@
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="{{ public_path('images/'.$article->featured_image) }}" alt="">
+        <img class="img-fluid rounded" src="{{  public_path() .'/storage/articleImages/'.$article->featured_image  }}" alt="">
 
         <hr>
 
