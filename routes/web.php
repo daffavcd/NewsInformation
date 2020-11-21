@@ -21,6 +21,9 @@ Route::post('replyComment', 'ArticleController@replyComment');
 Route::post('articleLike', 'ArticleController@articleLike');
 Route::post('articleUnlike', 'ArticleController@articleUnlike');
 
+Route::post('commentLike', 'ArticleController@commentLike');
+Route::post('commentDislike', 'ArticleController@commentDislike');
+
 Route::get('/about','AboutController');
 Route::get('category/{category}','CategoryController');
 Route::get('/', 'HomeController');

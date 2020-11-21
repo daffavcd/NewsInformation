@@ -1,6 +1,14 @@
 @extends('layouts.parent')
 @section('content')
+<style>
+  .falikedislike {
+    color: #909090;
+  }
 
+  .falikedislike:hover {
+    color: #796b6b !important;
+  }
+</style>
 <!-- Post Content Column -->
 <div class="col-lg-8">
 
@@ -117,12 +125,33 @@
       <div id="komen_{{$total}}">
         {{$item->comment}}
       </div>
+      <?php 
+       $jumlah_like_comment = \App\Comment_like::select(DB::raw('count(*) as jumlah_likes'))->where('comment_id', $item->id_comment)->where('likes', 1)->first();
+       $cek_sudah_like = \App\Comment_like::select('*')->where('comment_id', $item->id_comment)->where('likes', 1)->where('id_user', @$user->id)->first();
+      
+       $jumlah_dislike_comment = \App\Comment_like::select(DB::raw('count(*) as jumlah_dislikes'))->where('comment_id', $item->id_comment)->where('likes', 0)->first();
+       $cek_sudah_dislike = \App\Comment_like::select('*')->where('comment_id', $item->id_comment)->where('likes', 0)->where('id_user', @$user->id)->first();
+      ?>
+      <div>
+        {{-- LIKE DISLIKE COMMENT PARRENT --}}
+        <i class="fas fa-thumbs-up falikedislike" id="like_comment_{{$item->id_comment}}" style="cursor: pointer;<?php if(!empty($cek_sudah_like)){echo 'color: blue" title="Unlike"';}else{echo '" title="Like"';}?>
+          onclick=" like_comment({{$item->id_comment}},{{@$user->id}})"></i>
+        <span class="badge badge-light"
+          id="tampil_total_like_comment_{{$item->id_comment}}">{{$jumlah_like_comment->jumlah_likes}}</span>
+        <input type="hidden" id="total_like_comment_{{$item->id_comment}}"
+          value="{{$jumlah_like_comment->jumlah_likes}}">
+        <i class="fas fa-thumbs-down falikedislike" id="dislike_comment_{{$item->id_comment}}"
+          style="cursor: pointer;<?php if(!empty($cek_sudah_dislike)){echo 'color: blue" title="Remove Dislike"';}else{echo '" title="Dislike"';}?>"
+          onclick="dislike_comment({{$item->id_comment}},{{@$user->id}})"></i>
+        <span class="badge badge-light"
+          id="tampil_total_dislike_comment_{{$item->id_comment}}">{{$jumlah_dislike_comment->jumlah_dislikes}}</span>
+        <input type="hidden" id="total_dislike_comment_{{$item->id_comment}}"
+          value="{{$jumlah_dislike_comment->jumlah_dislikes}}">
+      </div>
       <?php
       if (auth()->check()) {
         if ($user->id == $item->id_user) {
-      ?>
-      {{-- UPDATE FORM KOMEN PARENT --}}
-      <div style="display: block;margin-top: 10px;">
+      ?> {{-- UPDATE FORM KOMEN PARENT --}} <div style="display: block;margin-top: 10px;">
         <form method="POST" action="/updateComment">
           @csrf
           <input type="hidden" name="id" value="{{$item->id_comment}}">
@@ -170,6 +199,9 @@
             <?php
             if (auth()->check()) {
             ?>
+            <?php
+             if ($user->id == $item->id_user) {
+             ?>
             <div class="btn-group" style="float:right;">
               <button type="button" class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -182,23 +214,45 @@
               </button>
 
               <div class="dropdown-menu">
-                <?php
-                  if ($user->id == $item->id_user) {
-                  ?>
+
                 <a class="dropdown-item edit_{{$total}}_{{$total_child}}" href="#">Edit</a>
                 <a class="dropdown-item delet" style="cursor: pointer" onclick="delet({{$item->id_comment}})">Delete</a>
-                <?php
+
+              </div>
+            </div>
+            <?php
                   }
 
                   ?>
-              </div>
-            </div>
             <?php
             }
             ?>
           </div>
           <div id="komen_{{$total}}_{{$total_child}}">
             {{$item->comment}}
+          </div>
+          <?php 
+       $jumlah_like_comment = \App\Comment_like::select(DB::raw('count(*) as jumlah_likes'))->where('comment_id', $item->id_comment)->where('likes', 1)->first();
+       $cek_sudah_like = \App\Comment_like::select('*')->where('comment_id', $item->id_comment)->where('likes', 1)->where('id_user', @$user->id)->first();
+      
+       $jumlah_dislike_comment = \App\Comment_like::select(DB::raw('count(*) as jumlah_dislikes'))->where('comment_id', $item->id_comment)->where('likes', 0)->first();
+       $cek_sudah_dislike = \App\Comment_like::select('*')->where('comment_id', $item->id_comment)->where('likes', 0)->where('id_user', @$user->id)->first();
+      ?>
+          <div>
+            {{-- LIKE DISLIKE COMMENT PARRENT --}}
+            <i class="fas fa-thumbs-up falikedislike" id="like_comment_{{$item->id_comment}}" style="cursor: pointer;<?php if(!empty($cek_sudah_like)){echo 'color: blue" title="Unlike"';}else{echo '" title="Like"';}?>
+          onclick=" like_comment({{$item->id_comment}},{{@$user->id}})"></i>
+            <span class="badge badge-light"
+              id="tampil_total_like_comment_{{$item->id_comment}}">{{$jumlah_like_comment->jumlah_likes}}</span>
+            <input type="hidden" id="total_like_comment_{{$item->id_comment}}"
+              value="{{$jumlah_like_comment->jumlah_likes}}">
+            <i class="fas fa-thumbs-down falikedislike" id="dislike_comment_{{$item->id_comment}}"
+              style="cursor: pointer;<?php if(!empty($cek_sudah_dislike)){echo 'color: blue" title="Remove Dislike"';}else{echo '" title="Dislike"';}?>"
+              onclick="dislike_comment({{$item->id_comment}},{{@$user->id}})"></i>
+            <span class="badge badge-light"
+              id="tampil_total_dislike_comment_{{$item->id_comment}}">{{$jumlah_dislike_comment->jumlah_dislikes}}</span>
+            <input type="hidden" id="total_dislike_comment_{{$item->id_comment}}"
+              value="{{$jumlah_dislike_comment->jumlah_dislikes}}">
           </div>
           <?php
           if (auth()->check()) {
@@ -260,6 +314,109 @@
     </div>
   </div>
 </div>
+<script>
+  function like_comment(key,cek){
+  var color1 = document.getElementById('like_comment_'+key);
+var color2 = document.getElementById('dislike_comment_'+key);
+  if (cek) {
+      $.ajax({
+        url: "/commentLike",
+        type: "POST",
+        data: {
+          _token: $("#csrf").val(),
+          comment_id: key
+        },
+        cache: false,
+        success: function(dataResult) {
+          console.log(dataResult);
+          var dataResult = JSON.parse(dataResult);
+          if (dataResult.statusCode == 'insert') {
+            color1.style.color = color1.style.color === 'blue' ? '#909090': 'blue';
+            color2.style.color = '#909090';
+            $('#total_like_comment_'+key).val(parseInt($('#total_like_comment_'+key).val()) + 1);
+            $("#tampil_total_like_comment_"+key).html($('#total_like_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Unlike');
+            $('#dislike_comment_'+key).prop('title', 'Dislike');
+          } else if (dataResult.statusCode == 'update') {
+            color1.style.color = color1.style.color === 'blue' ? '#909090': 'blue';
+            color2.style.color = '#909090';
+            //Kurangi yang Dislike
+            $('#total_dislike_comment_'+key).val(parseInt($('#total_dislike_comment_'+key).val()) - 1);
+            $("#tampil_total_dislike_comment_"+key).html($('#total_dislike_comment_'+key).val());
+            //
+            $('#total_like_comment_'+key).val(parseInt($('#total_like_comment_'+key).val()) + 1);
+            $("#tampil_total_like_comment_"+key).html($('#total_like_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Unlike');
+            $('#dislike_comment_'+key).prop('title', 'Dislike');
+          }else if (dataResult.statusCode == 'delete') {
+            color1.style.color = '#909090';
+            $('#total_like_comment_'+key).val(parseInt($('#total_like_comment_'+key).val()) - 1);
+            $("#tampil_total_like_comment_"+key).html($('#total_like_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Like');
+            $('#dislike_comment_'+key).prop('title', 'Dislike');
+          }else if (dataResult.statusCode == 201) {
+            alert("Error occured !");
+          }
+
+        }
+      });
+    } else {
+      alert('Please login first to continued !');
+
+    }
+  
+}
+
+function dislike_comment(key,cek){
+  var color1 = document.getElementById('like_comment_'+key);
+var color2 = document.getElementById('dislike_comment_'+key);
+  if (cek) {
+      $.ajax({
+        url: "/commentDislike",
+        type: "POST",
+        data: {
+          _token: $("#csrf").val(),
+          comment_id: key
+        },
+        cache: false,
+        success: function(dataResult) {
+          console.log(dataResult);
+          var dataResult = JSON.parse(dataResult);
+          if (dataResult.statusCode == 'insert') {
+            color1.style.color = '#909090';
+            color2.style.color = color2.style.color === 'blue' ? '#909090' : 'blue';
+            $('#total_dislike_comment_'+key).val(parseInt($('#total_dislike_comment_'+key).val()) + 1);
+            $("#tampil_total_dislike_comment_"+key).html($('#total_dislike_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Like');
+            $('#dislike_comment_'+key).prop('title', 'Remove Dislike');
+          } else if (dataResult.statusCode == 'update') {
+            color1.style.color = '#909090';
+            color2.style.color = color2.style.color === 'blue' ? '#909090' : 'blue';
+            //Kurangi yang Like
+            $('#total_like_comment_'+key).val(parseInt($('#total_like_comment_'+key).val()- 1));
+            $("#tampil_total_like_comment_"+key).html($('#total_like_comment_'+key).val());
+            //
+            $('#total_dislike_comment_'+key).val(parseInt($('#total_dislike_comment_'+key).val()) + 1);
+            $("#tampil_total_dislike_comment_"+key).html($('#total_dislike_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Like');
+            $('#dislike_comment_'+key).prop('title', 'Remove Dislike');
+          }else if (dataResult.statusCode == 'delete') {
+            color2.style.color = '#909090';
+            $('#total_dislike_comment_'+key).val(parseInt($('#total_dislike_comment_'+key).val()) - 1);
+            $("#tampil_total_dislike_comment_"+key).html($('#total_dislike_comment_'+key).val());
+            $('#like_comment_'+key).prop('title', 'Like');
+            $('#dislike_comment_'+key).prop('title', 'Dislike');
+          }else if (dataResult.statusCode == 201) {
+            alert("Error occured !");
+          }
+        }
+      });
+    } else {
+      alert('Please login first to continued !');
+    }
+ 
+}
+</script>
 <script>
   function buka_komen(key) {
     if (key) {

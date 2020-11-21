@@ -98,6 +98,74 @@ class ArticleController extends Controller
             "statusCode" => 200,
         ));
     }
+    public function commentLike(Request $request)
+    {
+        $user = Auth::user();
+
+        $get_comment_likes = DB::table('comment_likes')
+            ->where('comment_id', $request->comment_id)
+            ->where('id_user', $user->id)
+            ->first();
+        if (empty($get_comment_likes)) {
+            $bawa = new \App\Comment_like;
+            $bawa->comment_id = $request->comment_id;
+            $bawa->id_user = $user->id;
+            $bawa->likes = 1;
+
+            $bawa->save();
+
+            return json_encode(array(
+                "statusCode" => 'insert',
+            ));
+        } else if ($get_comment_likes->likes == 1) {
+            DB::table('comment_likes')
+                ->where('comment_id', $request->comment_id)
+                ->where('id_user', $user->id)
+                ->delete();
+
+            return json_encode(array(
+                "statusCode" => 'delete',
+            ));
+        } else {
+            \App\Comment_like::where('comment_id', $request->comment_id)->where('id_user', $user->id)->update(['likes' => 1]);
+
+            return json_encode(array(
+                "statusCode" => 'update',
+            ));
+        }
+    }
+    public function commentDislike(Request $request)
+    {
+        $user = Auth::user();
+        $get_comment_likes = DB::table('comment_likes')
+            ->where('comment_id', $request->comment_id)
+            ->where('id_user', $user->id)
+            ->first();
+        if (empty($get_comment_likes)) {
+            $bawa = new \App\Comment_like;
+            $bawa->comment_id = $request->comment_id;
+            $bawa->id_user = $user->id;
+            $bawa->likes = 0;
+
+            $bawa->save();
+            return json_encode(array(
+                "statusCode" => 'insert',
+            ));
+        } else if ($get_comment_likes->likes == 0) {
+            DB::table('comment_likes')
+                ->where('comment_id', $request->comment_id)
+                ->where('id_user', $user->id)
+                ->delete();
+            return json_encode(array(
+                "statusCode" => 'delete',
+            ));
+        } else {
+            $get = \App\Comment_like::where('comment_id', $request->comment_id)->where('id_user', $user->id)->update(['likes' => 0]);
+            return json_encode(array(
+                "statusCode" => 'update',
+            ));
+        }
+    }
     public function insertComment(Request $request)
     {
         $bawa = new Comment;
