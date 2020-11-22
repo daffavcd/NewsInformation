@@ -29,6 +29,8 @@ Route::get('category/{category}','CategoryController');
 Route::get('/', 'HomeController');
 Route::get('/find','FindController'); 
 Route::get('/profile','ProfileController'); 
+Route::get('/article/sortLast/{id}','ArticleController@sortLast'); 
+Route::get('/article/sortTop/{id}','ArticleController@sortTop'); 
 
 // AUTH ROUTE
 Route::get('/logout','Auth\LoginController@logout'); 
