@@ -10,7 +10,7 @@
 <img src="/images_read/3.png" title="Screenshot dari HP 3"/>
 
 ## Landing page after LogIn
-<img src="/images_read_read/4.png" title="Screenshot dari HP 4"/>
+<img src="/images_read/4.png" title="Screenshot dari HP 4"/>
 
 ## Read More Article
 <img src="/images_read/5.png" title="Screenshot dari HP 5"/>
